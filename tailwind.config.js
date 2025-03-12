@@ -28,7 +28,8 @@ module.exports = {
         200: "#666876",
         300: "#191d31",
       },
-      danger: "#f75555"
+      danger: "#f75555",
+      white: "#ffffff",
     },
   },
   plugins: [],
