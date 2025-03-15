@@ -69,7 +69,9 @@ export const Card = ({
       <Image source={{ uri: image }} className="w-full h-40 rounded-lg" />
 
       <View className="flex flex-col mt-2">
-        <Text className="text-base font-rubik-bold text-black-300">{name}</Text>
+        <Text className="text-base font-rubik-bold text-black-300 line-clamp-1">
+          {name}
+        </Text>
         <Text className="text-xs font-rubik text-black-100">{address}</Text>
 
         <View className="flex flex-row items-center justify-between mt-2">
