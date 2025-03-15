@@ -7,10 +7,9 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import { useGlobalContext } from "@/hooks/global-provider";
 import icons from "@/constants/icons";
 import Search from "@/components/Search";
-import { Card, FeaturedCard } from "@/components/Cards";
+import { Card } from "@/components/Cards";
 import Filters from "@/components/Filters";
 import { router, useLocalSearchParams } from "expo-router";
 import { useAppwrite } from "@/hooks/useAppwrite";
@@ -40,6 +39,9 @@ export default function Explore() {
     },
     skip: true,
   });
+
+  const handleCardPress = (id: string) => router.push(`/properties/${id}`);
+
   useEffect(() => {
     refetch({ filter: params.filter!, query: params.query!, limit: 20 });
   }, [params.filter, params.query]);
@@ -48,7 +50,9 @@ export default function Explore() {
     <SafeAreaView className="h-full bg-white">
       <FlatList
         data={properties}
-        renderItem={({ item }) => <Card item={item} />}
+        renderItem={({ item }) => (
+          <Card item={item} onPress={() => handleCardPress(item.$id)} />
+        )}
         keyExtractor={(item) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32"
