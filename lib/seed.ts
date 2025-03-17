@@ -8,10 +8,10 @@ import {
 } from "./data";
 
 const COLLECTIONS = {
-  AGENT: config.agentsCollectionId,
-  REVIEWS: config.reviewsCollectionId,
-  GALLERY: config.galleriesCollectionId,
-  PROPERTY: config.propertiesCollectionId,
+  AGENT: config.agentsCollectionId!,
+  REVIEWS: config.reviewsCollectionId!,
+  GALLERY: config.galleriesCollectionId!,
+  PROPERTY: config.propertiesCollectionId!,
 };
 
 const propertyTypes = [
@@ -68,6 +68,29 @@ function getRandomSubset<T>(
 
   // Return the first `subsetSize` elements of the shuffled array
   return arrayCopy.slice(0, subsetSize);
+}
+
+// Function to check if document with the ID already exists
+async function checkIfDocumentExists(collectionId: string, documentId: string) {
+  try {
+    const document = await databases.getDocument(
+      config.databaseId!,
+      collectionId,
+      documentId
+    );
+    return document !== null;
+  } catch (error) {
+    return false;
+  }
+}
+
+// Function to get a unique ID
+async function getUniqueId(collectionId: string) {
+  let uniqueId = ID.unique();
+  while (await checkIfDocumentExists(collectionId, uniqueId)) {
+    uniqueId = ID.unique();
+  }
+  return uniqueId;
 }
 
 async function seed() {
@@ -157,6 +180,7 @@ async function seed() {
               Math.floor(Math.random() * propertiesImages.length)
             ];
 
+      const propertyId = await getUniqueId(COLLECTIONS.PROPERTY);
       const property = await databases.createDocument(
         config.databaseId!,
         COLLECTIONS.PROPERTY!,

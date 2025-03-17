@@ -33,8 +33,6 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
     fn: getCurrentUser,
   });
 
-  console.log(JSON.stringify(user, null, 2));
-
   const isLogged = !!user;
 
   return (

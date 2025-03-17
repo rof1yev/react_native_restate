@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
+  Button,
 } from "react-native";
 import { useGlobalContext } from "@/hooks/global-provider";
 import icons from "@/constants/icons";
@@ -17,6 +18,7 @@ import { useAppwrite } from "@/hooks/useAppwrite";
 import { getLatestProperties, getProperties } from "@/lib/appwrite";
 import { useEffect } from "react";
 import NoResults from "@/components/NoResults";
+import seed from "@/lib/seed";
 
 export default function Index() {
   const { user } = useGlobalContext();
